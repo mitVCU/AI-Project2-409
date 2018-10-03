@@ -12,15 +12,15 @@ public class project2 {
         double alpha = 0.3;
         double bias = 300;
 
-        hardActivation(0.75, alpha, allData, bias);
-//        softActivation(0.75, alpha, allData, bias);
+//        hardActivation(0.75, alpha, allData, bias);
+        softActivation(0.75, alpha, allData, bias);
 //        hardActivation(0.25, alpha, allData);
 //        softActivation(0.25, alpha, allData);
     }
 
     private static List<Person> readData() throws IOException {
         ArrayList<Person> allDataPoints = new ArrayList<>();
-        File dataFile = new File("/Users/mit/Developer/Java/AI-Project2-409/src/Data/data.csv");
+        File dataFile = new File("./src/Data/data.csv");
         Scanner scanFile = new Scanner(dataFile);
 
         while (scanFile.hasNextLine()) {
@@ -53,8 +53,7 @@ public class project2 {
             for (int i = 0; i < (list.size() * trainingData); i++) {
                 int out;
                 net = ((list.get(i).getHeight() * weights[0]) + (list.get(i).getWeight() * weights[1])
-                        + bias * weights[2]);
-
+                        + (bias * weights[2]));
                 if (net > 0) {
                     out = 1;
                 } else {
@@ -86,18 +85,20 @@ public class project2 {
         double[] weightChange = new double[3];
         double error = 1;
         double count = 0;
+        double k = 0.002;
 
         while (error > 0.00005) {
-            if(count == 1000){
+            if(count == 10){
                 System.out.println("not good enough");
                 break;
             }
             for (int i = 0; i < (list.size() * trainingData); i++) {
-                int out;
+                double out;
                 net = ((list.get(i).getHeight() * weights[0]) + (list.get(i).getWeight() * weights[1])
-                        + (list.get(i).getGender() * weights[2]));
-
-                out = (int) (1 / ( 1 + Math.exp(net * -1)));
+                        + (bias * weights[2]));
+                System.out.println("net" + net);
+                out = 1 / ( 1 + Math.exp(net * -1 * k));
+                System.out.println("out: " + out);
                 weightMultiplier = learning * (list.get(i).getGender() - out);
                 weightChange[0] = list.get(i).getHeight() * weightMultiplier;
                 weightChange[1] = list.get(i).getWeight() * weightMultiplier;
