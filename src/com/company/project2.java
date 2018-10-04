@@ -85,10 +85,11 @@ public class project2 {
         double[] weightChange = new double[3];
         double error = 1;
         double count = 0;
-        double k = 0.002;
+        double k = 0.005;
+        double sum = 0.0;
 
         while (error > 0.00005) {
-            if(count == 10){
+            if(count == 2){
                 System.out.println("not good enough");
                 break;
             }
@@ -104,13 +105,16 @@ public class project2 {
                 weightChange[1] = list.get(i).getWeight() * weightMultiplier;
                 weightChange[2] = bias * weightMultiplier;
 
-                error = errorCalculation(list, trainingData, weights, bias);
+                error = errorCalc2(list, trainingData, weights, bias);
+                sum += Math.pow(error,2);
                 System.out.println(error);
+                sum += Math.pow(error,2);
                 for (int j = 0; j < weights.length; j++) {
                     weights[j] = weights[j] - weightChange[j];
                 }
 
             }
+            System.out.println("SUM " + sum);
             count++;
         }
         System.out.println(weights[0]+weights[1]+weights[2]);
@@ -121,27 +125,6 @@ public class project2 {
         int out;
         double correctCount = 0;
         double incorrectCount = 0;
-
-//        for(int i = 10; i<20;     //list.size();
-//            i++ ) {
-//
-//            double net = ((list.get(i).getHeight()  * weights[0]) + (list.get(i).getHeight() * weights[1])
-//                    + (list.get(i).getGender() * weights[2]));
-//
-//            if (net > 0) {
-//                out = 1;
-//            } else {
-//                out = 0;
-//            }
-//
-//            //if (list.get(i).getGender() == Math.round(out)) {
-//            //numMenCorrect++;
-//                error += Math.pow(list.get(i).getGender() - out, 2);
-//           // }
-//        }
-
-
-
         for (int i = (int) (list.size()*dataSize); i<list.size(); i++){
 
             double net = ((list.get(i).getHeight() * weights[0]) + (list.get(i).getWeight() * weights[1])
@@ -164,6 +147,27 @@ public class project2 {
 
         return error;
     }
+
+    private static double errorCalc2(List<Person> list, double dataSize, double[] weights, double bias){
+        double error = 0;
+        double correctCount = 0;
+        double incorrectCount = 0;
+
+
+        for (int i = (int) (list.size()*dataSize); i<list.size(); i++){
+
+            double net = ((list.get(i).getHeight() * weights[0]) + (list.get(i).getWeight() * weights[1])
+                    + (list.get(i).getGender() * weights[2]));
+
+            double out = (1 / ( 1 + Math.exp(net * -1* .005)));
+            double error1 = list.get(i).getGender() - out;
+            System.out.println("OUT " + out + "Desired " + list.get(i).getGender() + " =  "+ error1);
+            error+= error1;
+        }
+        return error;
+    }
+
+
 }
 
 class Person {
