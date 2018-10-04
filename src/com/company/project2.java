@@ -67,7 +67,7 @@ public class project2 {
             }
 
             System.out.println("Iterations: "+count+" : Global Error = "+globalError+" : RootMean = "+Math.sqrt(globalError/list.size()));
-        } while ( globalError>0.00005 && count<=100);
+        } while ( globalError>0.00005 && count<=1000);
 
         System.out.println("\n=====\n Decision equations");
         System.out.println(weights[0]+"*height + "+weights[1]+"*weight "+weights[2]+" = 0");
@@ -102,7 +102,7 @@ public class project2 {
 
             }
             System.out.println("Iterations: "+count+" : Global Error = "+globalError+" : RootMean = "+Math.sqrt(globalError/list.size()));
-        }while ( globalError>0.00005 && count<=100);
+        }while ( globalError>0.00005 && count<=1000);
 
         System.out.println("\n=====\nDecision equation:");
         System.out.println(weights[0]+"*height + "+weights[1]+"*weight "+weights[2]+" = 0");
