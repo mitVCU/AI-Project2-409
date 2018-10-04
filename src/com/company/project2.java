@@ -12,9 +12,13 @@ public class project2 {
         List<Person> allData = readData();
         double alpha = 0.3;
 
+        System.out.println("------------ HARD ACTIVATION 0.75 -----------");
         hardActivation(0.75, alpha, allData);
+        System.out.println("\n\n------------ SOFT ACTIVATION 0.75 -----------\n\n");
         softActivation(0.75, alpha, allData);
+        System.out.println("\n\n------------ HARD ACTIVATION 0.25 -----------\n\n");
         hardActivation(0.25, alpha, allData);
+        System.out.println("\n\n------------ SOFT ACTIVATION 0.25 -----------\n\n");
         softActivation(0.25, alpha, allData);
     }
 
@@ -76,6 +80,7 @@ public class project2 {
         double[] weights = {1,2,-1};
         double globalError;
         double out;
+        double k = 0.005;
         int count = 0;
 
         do {
@@ -86,7 +91,7 @@ public class project2 {
 
                 net = list.get(i).getHeight()*weights[0] + list.get(i).getWeight()*weights[1] + weights[2];
 
-                out = 1/(1 + Math.exp(net));
+                out = 1/(1 + Math.exp(net * -1 * k));
 
                 weightMultiplier = learning * (list.get(i).getGender() - out);
                 weights[0] += list.get(i).getHeight() * weightMultiplier * list.get(i).height;
