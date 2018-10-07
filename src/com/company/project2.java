@@ -15,17 +15,17 @@ public class project2 {
         Collections.shuffle(allData);
         System.out.println("------------ HARD ACTIVATION 0.75 -----------");
         hardActivation(0.75, alpha, allData);
-//        System.out.println("\n\n------------ SOFT ACTIVATION 0.75 -----------\n\n");
-//        softActivation(0.75, alpha, allData );
-//        System.out.println("\n\n------------ HARD ACTIVATION 0.25 -----------\n\n");
-//        hardActivation(0.25, alpha, allData);
-//        System.out.println("\n\n------------ SOFT ACTIVATION 0.25 -----------\n\n");
-//        softActivation(0.25, alpha, allData);
+        System.out.println("\n\n------------ SOFT ACTIVATION 0.75 -----------\n\n");
+        softActivation(0.75, alpha, allData );
+        System.out.println("\n\n------------ HARD ACTIVATION 0.25 -----------\n\n");
+        hardActivation(0.25, alpha, allData);
+        System.out.println("\n\n------------ SOFT ACTIVATION 0.25 -----------\n\n");
+        softActivation(0.25, alpha, allData);
     }
 
     private static List<Person> readData() throws IOException {
         ArrayList<Person> allDataPoints = new ArrayList<>();
-        File dataFile = new File("/Users/mit/Downloads/data.txt");
+        File dataFile = new File("/Users/vishakha/Documents/Projects/AI-Project2-409/src/Data/data.csv");
         Scanner scanFile = new Scanner(dataFile);
 
         while (scanFile.hasNextLine()) {
@@ -70,13 +70,13 @@ public class project2 {
                 totalError += Math.pow( (list.get(i).getGender() - out), 2);
             }
 
-            System.out.println("Iterations: "+count+" : Total Error = "+totalError+" : RootMeanError = "+Math.sqrt(totalError/list.size()));
+//            System.out.println("Iterations: "+count+" : Total Error = "+totalError+" : RootMeanError = "+Math.sqrt(totalError/list.size()));
         } while ( totalError>0.00005 && count<1000);
-
-        System.out.println("\n=====\n Decision equation");
+//
+        System.out.println("\n=====\nDecision equation");
         System.out.println(weights[0]+"*height + "+weights[1]+"*weight "+weights[2]+" = 0");
 
-        System.out.println("\n=====\n ");
+//        System.out.println("\n=====\n ");
 
         for (double j=(list.size()*(trainingData)); j<(list.size()); j++){
             net = list.get((int)j).getHeight()*weights[0] + list.get((int)j).getWeight()*weights[1] + weights[2];
@@ -90,10 +90,10 @@ public class project2 {
             }
 
             testTotalError += Math.pow( (list.get((int)j).getGender() - testOut), 2);
-            System.out.println("Test: "+j+1+" : Total Error = "+testTotalError+" : RootMeanError = "+Math.sqrt(testTotalError/(list.size() - (list.size()*(trainingData)))));
+//            System.out.println("Test: "+j+1+" : Total Error = "+testTotalError+" : RootMeanError = "+Math.sqrt(testTotalError/(list.size() - (list.size()*(trainingData)))));
         }
-        System.out.println("\n=====\n ");
-        System.out.println("Percent incorrect: "+(incorrect/(list.size()*(trainingData)))*100);
+//        System.out.println("\n=====\n ");
+        System.out.println("Percent incorrect: "+(incorrect/(list.size()*(1 - trainingData)))*100);
 
 
     }
@@ -129,7 +129,7 @@ public class project2 {
                 globalError += Math.pow( (list.get(i).getGender() - out), 2);
 
             }
-            System.out.println("Iterations: "+count+" : Total Error = "+globalError+" : RootMean = "+Math.sqrt(globalError/list.size()));
+//            System.out.println("Iterations: "+count+" : Total Error = "+globalError+" : RootMean = "+Math.sqrt(globalError/list.size()));
         }while ( globalError>0.00005 && count<1000);
 
         System.out.println("\n=====\nDecision equation:");
@@ -144,10 +144,10 @@ public class project2 {
                 incorrect++;
             }
             testTotalError += Math.pow( (list.get((int)j).getGender() - testOut), 2);
-            System.out.println("Test: "+j+1+" : Total Error = "+testTotalError+" : RootMeanError = "+Math.sqrt(testTotalError/(list.size() - (list.size()*(trainingData)))));
+//            System.out.println("Test: "+j+1+" : Total Error = "+testTotalError+" : RootMeanError = "+Math.sqrt(testTotalError/(list.size() - (list.size()*(trainingData)))));
         }
-        System.out.println("\n=====\n ");
-        System.out.println("Percent incorrect: "+(incorrect/(list.size()*(trainingData)))*100);
+//        System.out.println("\n=====\n ");
+        System.out.println("Percent incorrect: "+(incorrect/(list.size()*(1 - trainingData)))*100);
     }
 }
 
